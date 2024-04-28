@@ -64,13 +64,25 @@ public:
         //// Here "tex_sampler" is the name of the texture sampler2D you used in your shader, and
         //// "tex_name" needs to be one of the texture names you created previously with Add_Texture_From_File()
 
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_color.png", "sphere_color");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "sphere_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_color.jpg", "bunny_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_normal.png", "bunny_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/window.png", "window_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/buzz_color.png", "buzz_color");
+
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/marble_color.jpg", "marble_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/marble_normal.jpg", "marble_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_color.png", "earth_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "earth_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_color.jpg", "rock_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_normal.jpg", "rock_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/plastic_color.jpg", "plastic_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/plastic_normal.jpg", "plastic_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_color.png", "lava_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_normal.png", "lava_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_color.jpg", "canyonrock_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_normal.jpg", "canyonrock_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
+        
 
         //// Add all the lights you need for the scene (no more than 4 lights)
         //// The four parameters are position, ambient, diffuse, and specular.
@@ -102,13 +114,14 @@ public:
 
         //// Background Option (2): Programmable Canvas
         //// By default, we load a GT buzz + a number of stars
+        /*
         {
             bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
             bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
             bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
             bgEffect->Initialize();
         }
-        
+        */
         //// Background Option (3): Sky box
         //// Here we provide a default implementation of a sky box; customize it for your own sky box
         /*
@@ -133,14 +146,15 @@ public:
         //// Background Option (4): Sky sphere
         //// Here we provide a default implementation of a textured sphere; customize it for your own sky sphere
         {
+            /**/
             //// create object by reading an obj mesh
             auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
 
             //// set object's transform
             Matrix4f t;
-            t << 1, 0, 0, -1.5,
-                0, 1, 0, -1,
-                0, 0, 1, 0.5,
+            t << 10, 0, 0, 0,
+                0, 10, 0, 0,
+                0, 0, 10, 0,
                 0, 0, 0, 1;
             sphere->Set_Model_Matrix(t);
 
@@ -151,15 +165,84 @@ public:
             sphere->Set_Shininess(128);
 
             //// bind texture to object
-            sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
-            sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+            sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("marble_color"));
+            sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("marble_normal"));
 
             //// bind shader to object
-            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("environment"));
+        }
+
+        //// Earth object
+        {
+            auto earth = Add_Obj_Mesh_Object("obj/sphere.obj");
+
+            Matrix4f t;
+            t << 1., 0, 0, 0,
+                0, 1., 0, -.5,
+                0, 0, 1., 1,
+                0, 0, 0, 1;
+            earth->Set_Model_Matrix(t);
+            
+            earth->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("earth_color"));
+            earth->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("earth_normal"));
+
+            earth->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+    //// Planet1 object
+        {
+            auto planet1 = Add_Obj_Mesh_Object("obj/sphere.obj");
+
+            Matrix4f t;
+            t << .3, 0, 0, -1.,
+                0, .3, 0, 2.5,
+                0, 0, .3, 1.,
+                0, 0, 0, 1;
+            planet1->Set_Model_Matrix(t);
+            
+            planet1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("rock_color"));
+            planet1->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("rock_normal"));
+
+            planet1->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+    //// Planet2 object
+        {
+            auto planet2 = Add_Obj_Mesh_Object("obj/sphere.obj");
+
+            Matrix4f t;
+            t << .6, 0, 0, 1.5,
+                0, .6, 0, -2.,
+                0, 0, .6, -1,
+                0, 0, 0, 1;
+            planet2->Set_Model_Matrix(t);
+            
+            planet2->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("canyonrock_color"));
+            planet2->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("canyonrock_normal"));
+
+            planet2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+    //// Planet3 object
+        {
+            auto planet3 = Add_Obj_Mesh_Object("obj/sphere.obj");
+
+            Matrix4f t;
+            t << .5, 0, 0, 3.,
+                0, .5, 0, -2.3,
+                0, 0, .5, 1.3,
+                0, 0, 0, 1;
+            planet3->Set_Model_Matrix(t);
+            
+            planet3->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("lava_color"));
+            planet3->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("lava_normal"));
+
+            planet3->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
         //// Here we load a bunny object with the basic shader to show how to add an object into the scene
         {
+            /*
             //// create object by reading an obj mesh
             auto bunny = Add_Obj_Mesh_Object("obj/bunny.obj");
 
@@ -183,10 +266,12 @@ public:
 
             //// bind shader to object
             bunny->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+            */
         }
 
         //// Here we show an example of adding a mesh with noise-terrain (A6)
         {
+            /*
             //// create object by reading an obj mesh
             auto terrain = Add_Obj_Mesh_Object("obj/plane.obj");
 
@@ -214,12 +299,14 @@ public:
 
             //// bind shader to object (we do not bind texture for this object because we create noise for texture)
             terrain->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("terrain"));
+            */
         }
 
         //// Here we show an example of adding a transparent object with alpha blending
         //// This example will be useful if you implement objects such as tree leaves, grass blades, flower pedals, etc.
         //// Alpha blending will be turned on automatically if your texture has the alpha channel
         {
+            /*
             //// create object by reading an obj mesh
             auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
@@ -236,12 +323,14 @@ public:
 
             //// bind shader to object
             sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
+            */
         }
 
         //// Here we show an example of adding a billboard particle with a star shape using alpha blending
         //// The billboard is rendered with its texture and is always facing the camera.
         //// This example will be useful if you plan to implement a CPU-based particle system.
         {
+            /*
             //// create object by reading an obj mesh
             auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
@@ -258,13 +347,15 @@ public:
 
             //// bind shader to object
             sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("billboard"));
+            */
         }
 
         //// Here we show an example of shading (ray-tracing) a sphere with environment mapping
-        /*
+    
         {
+            /*
             //// create object by reading an obj mesh
-            auto sphere2 = Add_Obj_Mesh_Object("obj/sphere.obj");
+            auto sphere1 = Add_Obj_Mesh_Object("obj/sphere.obj");
 
             //// set object's transform
             Matrix4f t;
@@ -272,12 +363,17 @@ public:
                 0, .6, 0, -.5,
                 0, 0, .6, 1,
                 0, 0, 0, 1;
-            sphere2->Set_Model_Matrix(t);
+            sphere1->Set_Model_Matrix(t);
+            
+            //// bind texture to object
+            sphere1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("earth_color"));
+            sphere1->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("earth_normal"));
 
             //// bind shader to object
-            sphere2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("environment")); // bind shader to object
+            sphere1->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("environment")); // bind shader to object
+            */
         }
-        */
+    
 
         //// This for-loop updates the rendering model for each object on the list
         for (auto &mesh_obj : mesh_object_array){
