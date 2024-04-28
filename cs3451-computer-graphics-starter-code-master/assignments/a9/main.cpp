@@ -73,6 +73,7 @@ public:
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/marble_normal.jpg", "marble_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_color.png", "earth_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "earth_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/Earth_diffuse_8k.png", "earth_diffuse");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_color.jpg", "rock_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_normal.jpg", "rock_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_occlusion.jpg", "rock_occlusion");
@@ -80,6 +81,7 @@ public:
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_roughness.jpg", "rock_roughness");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/plastic_color.jpg", "plastic_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/plastic_normal.jpg", "plastic_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/neptune_map.jpg", "neptune_map");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_color.png", "lava_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_normal.png", "lava_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_spec.png", "lava_spec");
@@ -186,17 +188,17 @@ public:
 
         //// Earth object
         {
-            auto earth = Add_Obj_Mesh_Object("obj/sphere.obj");
+            auto earth = Add_Obj_Mesh_Object("obj/Earth.obj");
 
             Matrix4f t;
-            t << 1., 0, 0, 0,
-                0, 1., 0, -.5,
-                0, 0, 1., 1,
+            t << .01, 0, 0, 0,
+                0, .01, 0, -.5,
+                0, 0, .01, 1,
                 0, 0, 0, 1;
             earth->Set_Model_Matrix(t);
             
-            earth->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("earth_color"));
-            earth->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("earth_normal"));
+            earth->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("earth_diffuse"));
+            //earth->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("earth_normal"));
 
             earth->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
@@ -235,17 +237,17 @@ public:
 
     //// Planet3 object
         {
-            auto planet3 = Add_Obj_Mesh_Object("obj/sphere.obj");
+            auto planet3 = Add_Obj_Mesh_Object("obj/Neptune.obj");
 
             Matrix4f t;
-            t << .5, 0, 0, 3.,
-                0, .5, 0, -2.3,
-                0, 0, .5, 1.3,
+            t << .05, 0, 0, 3.,
+                0, .05, 0, -2.3,
+                0, 0, .05, 1.3,
                 0, 0, 0, 1;
             planet3->Set_Model_Matrix(t);
             
-            planet3->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("lava_color"));
-            planet3->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("lava_normal"));
+            planet3->Add_Texture("tex_map", OpenGLTextureLibrary::Get_Texture("neptune_map"));
+            planet3->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("plastic_normal"));
             planet3->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
@@ -317,7 +319,7 @@ public:
         {
             /*
             //// create object by reading an obj mesh
-            auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
+            auto sqad = Add_Obj_Mesh_Object("obj/galaxy.obj");
 
             //// set object's transform
             Matrix4f t;
