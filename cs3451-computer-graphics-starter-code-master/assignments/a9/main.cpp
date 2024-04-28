@@ -75,12 +75,21 @@ public:
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "earth_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_color.jpg", "rock_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_normal.jpg", "rock_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_occlusion.jpg", "rock_occlusion");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_height.png", "rock_height");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/rock_roughness.jpg", "rock_roughness");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/plastic_color.jpg", "plastic_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/plastic_normal.jpg", "plastic_normal");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_color.png", "lava_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_normal.png", "lava_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_spec.png", "lava_spec");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_occlusion.png", "lava_occlusion");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/lava_disp.png", "lava_disp");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_color.jpg", "canyonrock_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_normal.jpg", "canyonrock_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_occlusion.jpg", "canyonrock_occlusion");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_height.png", "canyonrock_height");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_roughness.jpg", "canyonrock_roughness");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
         
 
@@ -114,26 +123,28 @@ public:
 
         //// Background Option (2): Programmable Canvas
         //// By default, we load a GT buzz + a number of stars
-        /*
+        
         {
+            /*
             bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
             bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
             bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
             bgEffect->Initialize();
+            */
         }
-        */
+        
         //// Background Option (3): Sky box
         //// Here we provide a default implementation of a sky box; customize it for your own sky box
-        /*
+        
         {
             // from https://www.humus.name/index.php?page=Textures
             const std::vector<std::string> cubemap_files{
-                "cubemap/posx.jpg",     //// + X
-                "cubemap/negx.jpg",     //// - X
-                "cubemap/posy.jpg",     //// + Y
-                "cubemap/negy.jpg",     //// - Y
-                "cubemap/posz.jpg",     //// + Z
-                "cubemap/negz.jpg",     //// - Z 
+                "cubemap/bkg1_right.png",     //// + X
+                "cubemap/bkg1_left.png",     //// - X
+                "cubemap/bkg1_top.png",     //// + Y
+                "cubemap/bkg1_bot.png",     //// - Y
+                "cubemap/bkg1_front.png",     //// + Z
+                "cubemap/bkg1_back.png",     //// - Z 
             };
             OpenGLTextureLibrary::Instance()->Add_CubeMap_From_Files(cubemap_files, "cube_map");
 
@@ -141,12 +152,12 @@ public:
             skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("skybox"));
             skybox->Initialize();
         }
-        */
+        
 
         //// Background Option (4): Sky sphere
         //// Here we provide a default implementation of a textured sphere; customize it for your own sky sphere
         {
-            /**/
+            /*
             //// create object by reading an obj mesh
             auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
 
@@ -170,6 +181,7 @@ public:
 
             //// bind shader to object
             sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("environment"));
+            */
         }
 
         //// Earth object
@@ -202,7 +214,6 @@ public:
             
             planet1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("rock_color"));
             planet1->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("rock_normal"));
-
             planet1->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
@@ -219,7 +230,6 @@ public:
             
             planet2->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("canyonrock_color"));
             planet2->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("canyonrock_normal"));
-
             planet2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
@@ -236,7 +246,6 @@ public:
             
             planet3->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("lava_color"));
             planet3->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("lava_normal"));
-
             planet3->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
