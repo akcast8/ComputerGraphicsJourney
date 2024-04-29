@@ -26,7 +26,7 @@ layout(std140) uniform lights
 {
 	vec4 amb;
 	ivec4 lt_att; // lt_att[0] = number of lights
-	light lt[4];
+	light lt[1];
 };
 
 /*input variables*/
@@ -75,6 +75,6 @@ void main()
 
     vec3 texture_normal = read_normal_texture();
     vec3 texture_color = texture(tex_color, vtx_uv).rgb;
-    frag_color = vec4(texture_color.rgb, 1.0);
-    //frag_color = vec4(texture_color.rgb + shading_texture_with_phong(lt[1], e, p, lt[1].pos.xyz, N), 1.0);
+    //frag_color = vec4(texture_color.rgb, 1.0);
+    frag_color = vec4(texture_color.rgb + shading_texture_with_phong(lt[0], e, p, lt[0].pos.xyz, N), 1.0);
 }
