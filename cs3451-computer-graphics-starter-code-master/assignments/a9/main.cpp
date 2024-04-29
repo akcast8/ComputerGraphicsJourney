@@ -94,7 +94,8 @@ public:
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/canyonrock_roughness.jpg", "canyonrock_roughness");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
         
-
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/UFO_color.jpg", "UFO_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/UFO_normal.jpg", "UFO_normal");
         //// Add all the lights you need for the scene (no more than 4 lights)
         //// The four parameters are position, ambient, diffuse, and specular.
         //// The lights you declared here will be synchronized to all shaders in uniform lights.
@@ -102,8 +103,8 @@ public:
         //// You can also create your own lights by directly declaring them in a shader without using Add_Light().
         //// Here we declared three default lights for you. Feel free to add/delete/change them at your will.
 
-        opengl_window->Add_Light(Vector3f(3, 1, 3), Vector3f(0.1, 0.1, 0.1), Vector3f(1, 1, 1), Vector3f(0.5, 0.5, 0.5)); 
-        opengl_window->Add_Light(Vector3f(0, 0, -5), Vector3f(0.1, 0.1, 0.1), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
+        opengl_window->Add_Light(Vector3f(1, 4, 1), Vector3f(1., 1., 1.), Vector3f(1, 1, 1), Vector3f(0.5, 0.5, 0.5)); 
+        opengl_window->Add_Light(Vector3f(5, 5, 5), Vector3f(0.1, 0.1, 0.1), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
         opengl_window->Add_Light(Vector3f(-5, 1, 3), Vector3f(0.1, 0.1, 0.1), Vector3f(0.9, 0.9, 0.9), Vector3f(0.5, 0.5, 0.5));
 
         //// Add the background / environment
@@ -200,7 +201,7 @@ public:
             earth->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("earth_diffuse"));
             //earth->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("earth_normal"));
 
-            earth->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+            earth->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("billboard"));
         }
 
     //// Planet1 object
@@ -317,24 +318,24 @@ public:
         //// This example will be useful if you implement objects such as tree leaves, grass blades, flower pedals, etc.
         //// Alpha blending will be turned on automatically if your texture has the alpha channel
         {
-            /*
+            
             //// create object by reading an obj mesh
-            auto sqad = Add_Obj_Mesh_Object("obj/galaxy.obj");
+            auto spaceship = Add_Obj_Mesh_Object("obj/spaceship.obj");
 
             //// set object's transform
             Matrix4f t;
-            t << 1, 0, 0, -0.5,
-                0, 1, 0, 0,
-                0, 0, 1, 1.5,
+            t << .5, 0, 0, -4.,
+                0, .5, 0, 4.,
+                0, 0, .5, 3.,
                 0, 0, 0, 1;
-            sqad->Set_Model_Matrix(t);
+            spaceship->Set_Model_Matrix(t);
 
             //// bind texture to object
-            sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("window_color"));
-
+            spaceship->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("marble_color"));
+            spaceship->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("marble_normal"));
             //// bind shader to object
-            sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
-            */
+            spaceship->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("environment"));
+            
         }
 
         //// Here we show an example of adding a billboard particle with a star shape using alpha blending

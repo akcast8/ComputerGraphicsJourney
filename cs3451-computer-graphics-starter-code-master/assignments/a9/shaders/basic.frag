@@ -50,7 +50,13 @@ out vec4 frag_color;
 
 vec3 shading_texture_with_phong(light li, vec3 e, vec3 p, vec3 s, vec3 n)
 {
-    return vec3(0.0);
+    vec3 v = normalize(e - p);
+    vec3 l = normalize(s - p);
+    float lambertian = max(0.0, dot(n, l));
+    vec3 diffuseColor = kd * li.dif.rgb * lambertian;
+    vec3 r = reflect(-l, n);
+    vec3 specularColor = ks * li.spec.rgb * pow(max(0.0, dot(v,r)), shininess);
+    return vec3(ka * li.amb.rgb + diffuseColor + specularColor);
 }
 
 vec3 read_normal_texture()
@@ -69,6 +75,6 @@ void main()
 
     vec3 texture_normal = read_normal_texture();
     vec3 texture_color = texture(tex_color, vtx_uv).rgb;
-
     frag_color = vec4(texture_color.rgb, 1.0);
+    //frag_color = vec4(texture_color.rgb + shading_texture_with_phong(lt[1], e, p, lt[1].pos.xyz, N), 1.0);
 }
