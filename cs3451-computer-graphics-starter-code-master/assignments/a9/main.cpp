@@ -21,18 +21,21 @@
 #define CLOCKS_PER_SEC 100000
 #endif
 
+
 class MyDriver : public OpenGLViewer
 {
     std::vector<OpenGLTriangleMesh *> mesh_object_array;
     OpenGLBgEffect *bgEffect = nullptr;
     OpenGLSkybox *skybox = nullptr;
     clock_t startTime;
+    int frame;
 
 public:
     virtual void Initialize()
     {
         draw_axes = false;
         startTime = clock();
+        frame = 1;
         OpenGLViewer::Initialize();
     }
 
@@ -120,16 +123,16 @@ public:
 
         //// Background Option (2): Programmable Canvas
         //// By default, we load a GT buzz + a number of stars
-        
+        /*
         {
-            /*
+            
             bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
             bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
             bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
             bgEffect->Initialize();
-            */
+            
         }
-        
+        */
         //// Background Option (3): Sky box
         //// Here we provide a default implementation of a sky box; customize it for your own sky box
         
@@ -147,7 +150,9 @@ public:
 
             skybox = Add_Interactive_Object<OpenGLSkybox>();
             skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("skybox"));
+            ////skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
             skybox->Initialize();
+            ////skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
         }
         
 
@@ -352,6 +357,8 @@ public:
     //// Go to next frame
     virtual void Toggle_Next_Frame()
     {
+        ////skybox->setTime(GLfloat(clock() - startTime) / CLOCKS_PER_SEC);
+        ////skybox->setFrame(frame++);
         for (auto &mesh_obj : mesh_object_array)
             mesh_obj->setTime(GLfloat(clock() - startTime) / CLOCKS_PER_SEC);
 

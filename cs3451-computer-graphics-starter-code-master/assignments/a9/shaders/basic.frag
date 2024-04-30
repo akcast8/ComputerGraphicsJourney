@@ -66,6 +66,17 @@ vec3 read_normal_texture()
     return normal;
 }
 
+vec3 renderParticle(vec2 fragPos, vec2 particlePos, float brightness, vec3 color)
+{
+    vec3 fragColor = vec3(0.0);
+
+    float d = distance(fragPos, particlePos);
+    float df = 1/d;
+    fragColor = df * brightness * color;
+
+    return fragColor;
+}
+
 void main()
 {
     vec3 e = position.xyz;              //// eye position
